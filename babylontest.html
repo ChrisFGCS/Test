@@ -67,7 +67,8 @@
           });
 
         //UI
-
+        let advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("GUI", true, scene);
+        let loadedGUI = await advancedTexture.parseFromURLAsync("https://doc.babylonjs.com/examples/ColorPickerGui.json");
 
 
 
