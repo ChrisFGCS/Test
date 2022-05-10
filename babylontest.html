@@ -40,13 +40,12 @@
         // This creates a basic Babylon Scene object (non-mesh)
         var scene = new BABYLON.Scene(engine);
         //Orbit Camera
-        var camera = new BABYLON.ArcRotateCamera("camera", BABYLON.Tools.ToRadians(250), BABYLON.Tools.ToRadians(90), 150, BABYLON.Vector3.Zero(), scene);
+        var camera = new BABYLON.ArcRotateCamera("camera", BABYLON.Tools.ToRadians(250), BABYLON.Tools.ToRadians(85), 150, BABYLON.Vector3.Zero(), scene);
         // This targets the camera to scene origin
         camera.setTarget(BABYLON.Vector3.Zero());
         // This attaches the camera to the canvas
         camera.attachControl(canvas, true);
 
-        scene.createDefaultEnvironment();
         scene.clearColor = new BABYLON.Color3(0.2, 0.2, 0.2);
 
         //This initialises 3 Hemispheric Lights in the 3 axes to create the illusion of 360 degree light
@@ -58,16 +57,15 @@
         light3.intensity = 3;
 
         // Skybox
-        var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 1500.0 }, scene);
-        var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
-        skyboxMaterial.backFaceCulling = false;
-        skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/skybox", scene);
-        skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
-        skyboxMaterial.diffuseColor = new BABYLON.Color3(0.2, 0.2, 0.2);
-        skyboxMaterial.specularColor = new BABYLON.Color3(0.2, 0.2, 0.2);
-        skybox.material = skyboxMaterial;
 
-        BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/ChrisFGCS/AllClean/main/Blender/", "240 Blackfriar's road (Tex).glb", scene, function(newMeshes){
+
+        //Model import
+        var buildingMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/ChrisFGCS/AllClean/main/Blender/", "240 Blackfriar's road (Tex).glb", scene, function(newMeshes){
+          var helper = scene.createDefaultEnvironment({
+            createSkybox: false,
+            enableGroundMirror: true,
+          });
+
         //UI
 
 
@@ -93,5 +91,6 @@
 	</script>
 
    </body>
+
 
 </html>
