@@ -35,38 +35,44 @@
         const canvas = document.getElementById("renderCanvas"); // Get the canvas element
         const engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
 
-    // Add your code here matching the playground format
-    var createScene = function () {
-    // This creates a basic Babylon Scene object (non-mesh)
-    var scene = new BABYLON.Scene(engine);
-    //Orbit Camera
-    var camera = new BABYLON.ArcRotateCamera("camera", BABYLON.Tools.ToRadians(250), BABYLON.Tools.ToRadians(90), 150, BABYLON.Vector3.Zero(), scene);
-    // This targets the camera to scene origin
-    camera.setTarget(BABYLON.Vector3.Zero());
-    // This attaches the camera to the canvas
-    camera.attachControl(canvas, true);
+        // Add your code here matching the playground format
+        var createScene = function () {
+        // This creates a basic Babylon Scene object (non-mesh)
+        var scene = new BABYLON.Scene(engine);
+        //Orbit Camera
+        var camera = new BABYLON.ArcRotateCamera("camera", BABYLON.Tools.ToRadians(250), BABYLON.Tools.ToRadians(90), 150, BABYLON.Vector3.Zero(), scene);
+        // This targets the camera to scene origin
+        camera.setTarget(BABYLON.Vector3.Zero());
+        // This attaches the camera to the canvas
+        camera.attachControl(canvas, true);
 
-    scene.createDefaultEnvironment();
-    scene.clearColor = new BABYLON.Color3(0.5, 0.5, 0.5);
+        scene.createDefaultEnvironment();
+        scene.clearColor = new BABYLON.Color3(0.2, 0.2, 0.2);
 
-    //This initialises 3 Hemispheric Lights in the 3 axes to create the illusion of 360 degree light
-    var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(-1, 0, 0), scene);
-    light.intensity = 3;
-    var light2 = new BABYLON.HemisphericLight("light2", new BABYLON.Vector3(0, 1, 0), scene);
-    light2.intensity = 3;
-        var light3 = new BABYLON.HemisphericLight("light3", new BABYLON.Vector3(0, 0, -1), scene);
-    light3.intensity = 3;
+        //This initialises 3 Hemispheric Lights in the 3 axes to create the illusion of 360 degree light
+        var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(-1, 0, 0), scene);
+        light.intensity = 3;
+        var light2 = new BABYLON.HemisphericLight("light2", new BABYLON.Vector3(0, 1, 0), scene);
+        light2.intensity = 3;
+            var light3 = new BABYLON.HemisphericLight("light3", new BABYLON.Vector3(0, 0.5, -1), scene);
+        light3.intensity = 3;
 
-    // Skybox
+        // Skybox
+        var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 1500.0 }, scene);
+        var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+        skyboxMaterial.backFaceCulling = false;
+        skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/skybox", scene);
+        skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+        skyboxMaterial.diffuseColor = new BABYLON.Color3(0.2, 0.2, 0.2);
+        skyboxMaterial.specularColor = new BABYLON.Color3(0.2, 0.2, 0.2);
+        skybox.material = skyboxMaterial;
 
+        BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/ChrisFGCS/AllClean/main/AllClean Blender/", "240 Blackfriar's road (Tex).glb", scene, function(newMeshes){
+        //UI
+        });
 
-    BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/ChrisFGCS/AllClean/main/", "240 Blackfriar's road (Tex).glb", scene, function(newMeshes){
-
-      //UI
-    });
-
-    return scene;
-};
+        return scene;
+    };
 
 
 
