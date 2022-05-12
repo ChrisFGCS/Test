@@ -68,20 +68,20 @@
               });
 
             //GUI
-            //Front face
 
+            //Front face
             for (var i = 0; i < 15; i++) {
-              var planei = BABYLON.MeshBuilder.CreatePlane("plane", {height:74-i*1.2, width: 3.5});
+              var planei = BABYLON.MeshBuilder.CreatePlane("plane", {height:73-i*1.2, width: 3.5});
               planei.position.x = 39.5-i*3.5
-              planei.position.y = -5-i*0.6
-              planei.position.z = -12
+              planei.position.y = -4-i*0.6
+              planei.position.z = -12.1
 
               var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei);
               var buttoni = BABYLON.GUI.Button.CreateSimpleButton("but1");
               buttoni.color = "white";
               buttoni.fontSize = 50;
               buttoni.background = "teal";
-              buttoni.alpha = 0.1;
+              buttoni.alpha = 0.2;
                   buttoni.onPointerEnterObservable.add(function() {
                      //Event on mouse over
 
@@ -91,17 +91,17 @@
             }
             //Steeper slope
             for (var i = 0; i < 5; i++) {
-              var planei = BABYLON.MeshBuilder.CreatePlane("plane", {height:52.5-i*11, width: 3.6});
+              var planei = BABYLON.MeshBuilder.CreatePlane("plane", {height:52.5-i*11, width: 3.5});
               planei.position.x = -12.5-i*3.5
-              planei.position.y = -17-i*5.5
-              planei.position.z = -12.5
+              planei.position.y = -14.3-i*5.5
+              planei.position.z = -12.1
 
               var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei);
               var buttoni = BABYLON.GUI.Button.CreateSimpleButton("but1");
               buttoni.color = "white";
               buttoni.fontSize = 50;
               buttoni.background = "teal";
-              buttoni.alpha = 0.1;
+              buttoni.alpha = 0.2;
                   buttoni.onPointerEnterObservable.add(function() {
                      //Event on mouse over
 
@@ -115,14 +115,14 @@
             var planei = BABYLON.MeshBuilder.CreatePlane("plane", {height:73, width: 3.5});
             planei.position.x = 54-i*3.5
             planei.position.y = -4
-            planei.position.z = 12.5
+            planei.position.z = 12.1
 
             var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei);
             var buttoni = BABYLON.GUI.Button.CreateSimpleButton("but1");
             buttoni.color = "white";
             buttoni.fontSize = 50;
             buttoni.background = "teal";
-            buttoni.alpha = 0.1;
+            buttoni.alpha = 0.2;
             buttoni.onPointerEnterObservable.add(function() {
              //Event on mouse over
 
@@ -133,10 +133,10 @@
 
           //Right face
           for (var i = 0; i < 9; i++) {
-          var planei = BABYLON.MeshBuilder.CreatePlane("plane", {height:73, width: 3.2});
-          planei.position.x = 56.2-i*1.7
+          var planei = BABYLON.MeshBuilder.CreatePlane("plane", {height:73, width: 3.3});
+          planei.position.x = 55.2-i*1.65
           planei.position.y = -4
-          planei.position.z = 11-i*3
+          planei.position.z = 10.7-i*2.7
           planei.rotation.y = -1
 
           var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei);
@@ -144,7 +144,7 @@
           buttoni.color = "white";
           buttoni.fontSize = 50;
           buttoni.background = "teal";
-          buttoni.alpha = 1;
+          buttoni.alpha = 0.2;
           buttoni.onPointerEnterObservable.add(function() {
            //Event on mouse over
 
