@@ -70,7 +70,7 @@
 
                 //Front face
                 for (var i = 0; i < 15; i++) {
-                    var planei = BABYLON.MeshBuilder.CreatePlane("plane", { height: 73 - i * 1.2, width: 3.5 });
+                    var planei = BABYLON.MeshBuilder.CreatePlane(planei, { height: 73 - i * 1.2, width: 3.5 });
                     planei.position.x = 39.5 - i * 3.5
                     planei.position.y = -4 - i * 0.6
                     planei.position.z = -12.1
