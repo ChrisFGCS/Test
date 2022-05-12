@@ -25,6 +25,7 @@
         <script src="https://cdn.babylonjs.com/babylon.js"></script>
         <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
         <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+        <script src="https://cdn.babylonjs.com/gui/babylon.gui.js"></script>
     </head>
 
    <body>
@@ -36,45 +37,128 @@
         const engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
 
         // Add your code here matching the playground format
-        var createScene = function () {
-        // This creates a basic Babylon Scene object (non-mesh)
-        var scene = new BABYLON.Scene(engine);
-        //Orbit Camera
-        var camera = new BABYLON.ArcRotateCamera("camera", BABYLON.Tools.ToRadians(250), BABYLON.Tools.ToRadians(85), 150, BABYLON.Vector3.Zero(), scene);
-        // This targets the camera to scene origin
-        camera.setTarget(BABYLON.Vector3.Zero());
-        // This attaches the camera to the canvas
-        camera.attachControl(canvas, true);
+            var createScene = function () {
+            // This creates a basic Babylon Scene object (non-mesh)
+            var scene = new BABYLON.Scene(engine);
+            //Orbit Camera
+            var camera = new BABYLON.ArcRotateCamera("camera", BABYLON.Tools.ToRadians(250), BABYLON.Tools.ToRadians(85), 150, BABYLON.Vector3.Zero(), scene);
+            // This targets the camera to scene origin
+            camera.setTarget(BABYLON.Vector3.Zero());
+            // This attaches the camera to the canvas
+            camera.attachControl(canvas, true);
 
-        scene.clearColor = new BABYLON.Color3(0.2, 0.2, 0.2);
+            scene.clearColor = new BABYLON.Color3(0.2, 0.2, 0.2);
 
-        //This initialises 3 Hemispheric Lights in the 3 axes to create the illusion of 360 degree light
-        var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(-1, 0, 0), scene);
-        light.intensity = 3;
-        var light2 = new BABYLON.HemisphericLight("light2", new BABYLON.Vector3(0, 1, 0), scene);
-        light2.intensity = 3;
-            var light3 = new BABYLON.HemisphericLight("light3", new BABYLON.Vector3(0, 0.5, -1), scene);
-        light3.intensity = 3;
+            //This initialises 3 Hemispheric Lights in the 3 axes to create the illusion of 360 degree light
+            var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(-1, 0, 0), scene);
+            light.intensity = 3;
+            var light2 = new BABYLON.HemisphericLight("light2", new BABYLON.Vector3(0, 1, 0), scene);
+            light2.intensity = 3;
+                var light3 = new BABYLON.HemisphericLight("light3", new BABYLON.Vector3(0, 0.5, -1), scene);
+            light3.intensity = 3;
 
-        // Skybox
-
-
-        //Model import
-        var buildingMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/ChrisFGCS/AllClean/main/Blender/", "240 Blackfriar's road (Tex).glb", scene, function(newMeshes){
-          var helper = scene.createDefaultEnvironment({
-            createSkybox: false,
-            enableGroundMirror: true,
-          });
-
-        //UI
+            // Skybox
 
 
+            //Model import
+            var buildingMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/ChrisFGCS/AllClean/main/Blender/", "240 Blackfriar's road (Tex).glb", scene, function(newMeshes){
+              var helper = scene.createDefaultEnvironment({
+                createSkybox: false,
+                enableGroundMirror: true,
+              });
+
+            //GUI
+            //Front face
+
+            for (var i = 0; i < 15; i++) {
+              var planei = BABYLON.MeshBuilder.CreatePlane("plane", {height:74-i*1.2, width: 3.5});
+              planei.position.x = 39.5-i*3.5
+              planei.position.y = -5-i*0.6
+              planei.position.z = -12
+
+              var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei);
+              var buttoni = BABYLON.GUI.Button.CreateSimpleButton("but1");
+              buttoni.color = "white";
+              buttoni.fontSize = 50;
+              buttoni.background = "teal";
+              buttoni.alpha = 0.1;
+                  buttoni.onPointerEnterObservable.add(function() {
+                     //Event on mouse over
+
+                  }
+                ,);
+              advancedTexture.addControl(buttoni);
+            }
+            //Steeper slope
+            for (var i = 0; i < 5; i++) {
+              var planei = BABYLON.MeshBuilder.CreatePlane("plane", {height:52.5-i*11, width: 3.6});
+              planei.position.x = -12.5-i*3.5
+              planei.position.y = -17-i*5.5
+              planei.position.z = -12.5
+
+              var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei);
+              var buttoni = BABYLON.GUI.Button.CreateSimpleButton("but1");
+              buttoni.color = "white";
+              buttoni.fontSize = 50;
+              buttoni.background = "teal";
+              buttoni.alpha = 0.1;
+                  buttoni.onPointerEnterObservable.add(function() {
+                     //Event on mouse over
+
+                  }
+                ,);
+              advancedTexture.addControl(buttoni);
+            }
+
+            //Rear face
+            for (var i = 0; i < 19; i++) {
+            var planei = BABYLON.MeshBuilder.CreatePlane("plane", {height:73, width: 3.5});
+            planei.position.x = 54-i*3.5
+            planei.position.y = -4
+            planei.position.z = 12.5
+
+            var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei);
+            var buttoni = BABYLON.GUI.Button.CreateSimpleButton("but1");
+            buttoni.color = "white";
+            buttoni.fontSize = 50;
+            buttoni.background = "teal";
+            buttoni.alpha = 0.1;
+            buttoni.onPointerEnterObservable.add(function() {
+             //Event on mouse over
+
+              }
+            ,);
+            advancedTexture.addControl(buttoni);
+          }
+
+          //Right face
+          for (var i = 0; i < 9; i++) {
+          var planei = BABYLON.MeshBuilder.CreatePlane("plane", {height:73, width: 3.2});
+          planei.position.x = 56.2-i*1.7
+          planei.position.y = -4
+          planei.position.z = 11-i*3
+          planei.rotation.y = -1
+
+          var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei);
+          var buttoni = BABYLON.GUI.Button.CreateSimpleButton("but1");
+          buttoni.color = "white";
+          buttoni.fontSize = 50;
+          buttoni.background = "teal";
+          buttoni.alpha = 1;
+          buttoni.onPointerEnterObservable.add(function() {
+           //Event on mouse over
+
+            }
+          ,);
+          advancedTexture.addControl(buttoni);
+        }
 
 
-        });
-        return scene;
-    };
+            });
 
+            return scene;
+
+        };
 
 
         const scene = createScene(); //Call the createScene function
