@@ -7,6 +7,20 @@
   <title>Babylon Template</title>
 
   <style>
+
+  #fps {
+                  position: absolute;
+                  background-color: black;
+                  border: 2px solid red;
+                  text-align: center;
+                  font-size: 16px;
+                  color: white;
+                  top: 15px;
+                  right: 10px;
+                  width: 60px;
+                  height: 20px;
+              }
+
   html, body {
     overflow: hidden;
     width: 100%;
@@ -18,7 +32,7 @@
   #renderCanvas {
     width: 100%;
     height: 100%;
-    margin: 0%;
+    margin: auto;
     touch-action: none;
   }
   </style>
@@ -31,11 +45,14 @@
 
 <body>
 
+  <div id="fps">0</div>
+
   <canvas id="renderCanvas" touch-action="none"></canvas> <!-- touch-action="none" for best results from PEP -->
 
   <script>
   const canvas = document.getElementById("renderCanvas"); // Get the canvas element
-  const engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
+  const engine = new BABYLON.Engine(canvas, true, {doNotHandleContextLost: true}); // Generate the BABYLON 3D engine
+  engine.enableOfflineSupport = false;
 
   var createScene = function () {
     // This creates a basic Babylon Scene object (non-mesh)
@@ -61,24 +78,31 @@
 
 
     //Model import
-    var buildingMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/ChrisFGCS/Test/main/Blender/", "240 Blackfriar's road (Tex).glb", scene, function (newMeshes) {
+    var buildingMesh = BABYLON.SceneLoader.Append("https://raw.githubusercontent.com/ChrisFGCS/Test/main/Blender/", "240 Blackfriar's road (Tex).glb", scene, function (newMeshes) {
       var helper = scene.createDefaultEnvironment({
         createSkybox: false,
         enableGroundMirror: true,
       });
 
+
+
       //GUI
 
+      let plane = BABYLON.MeshBuilder.CreatePlane("plane", { height: 73, width: 3.5 });
+      plane.scaling = new BABYLON.Vector3(0.1, 0.1, 0.1)
+
+      var mouseOver = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mouseOverUI")
       //Front face slope
       //Populate with buttons planes
       for (let i = 0; i < 15; i++) {
-        let planei = BABYLON.MeshBuilder.CreatePlane("plane", { height: 73 - i * 1.2, width: 3.5 });
+        let planei = plane.clone("Plane")
+        planei.scaling = new BABYLON.Vector3(1, 1 - i * 0.017, 1);
         planei.position.x = 39.5 - i * 3.5
-        planei.position.y = -4 - i * 0.6
+        planei.position.y = -4 - i * 0.65
         planei.position.z = -12.1
 
         //Apply button properties to planes
-        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei, 512, 512, true);
+        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei, 1, 1, true);
         let buttoni = BABYLON.GUI.Button.CreateSimpleButton("but1");
         buttoni.color = "white";
         buttoni.fontSize = 50;
@@ -86,9 +110,8 @@
         buttoni.alpha = 0.2;
 
         //Initialise container rectangle for hover-over popup
-        var mouseOver = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mouseOverUI")
         let rect1 = new BABYLON.GUI.Rectangle();
-        rect1.width = 0.3;
+        rect1.width = "250px";
         rect1.height = "80px";
         rect1.background = "Beige";
         mouseOver.addControl(rect1);
@@ -122,21 +145,21 @@
 
       //Steeper slope
       for (let i = 0; i < 5; i++) {
-        let planei = BABYLON.MeshBuilder.CreatePlane("plane", { height: 52.5 - i * 11, width: 3.5 });
+        let planei = plane.clone("Plane")
+        planei.scaling = new BABYLON.Vector3(1, 0.75 - i * 0.165, 1);
         planei.position.x = -12.5 - i * 3.5
-        planei.position.y = -14.3 - i * 5.5
+        planei.position.y = -14 - i * 5.9
         planei.position.z = -12.1
 
-        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei, 512, 512, true);
+        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei, 1, 1, true);
         let buttoni = BABYLON.GUI.Button.CreateSimpleButton("but1");
         buttoni.color = "white";
         buttoni.fontSize = 50;
         buttoni.background = "teal";
         buttoni.alpha = 0.2;
 
-        var mouseOver = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mouseOverUI")
         let rect1 = new BABYLON.GUI.Rectangle();
-        rect1.width = 0.3;
+        rect1.width = "250px";
         rect1.height = "80px";
         rect1.background = "Beige";
         mouseOver.addControl(rect1);
@@ -165,21 +188,21 @@
 
       //Rear face
       for (let i = 0; i < 19; i++) {
-        let planei = BABYLON.MeshBuilder.CreatePlane("plane", { height: 73, width: 3.5 });
+        let planei = plane.clone("Plane")
+        planei.scaling = new BABYLON.Vector3(1, 1, 1);
         planei.position.x = 54 - i * 3.5
         planei.position.y = -4
         planei.position.z = 12.1
 
-        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei, 512, 512, true);
+        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei, 1, 1, true);
         let buttoni = BABYLON.GUI.Button.CreateSimpleButton("but1");
         buttoni.color = "white";
         buttoni.fontSize = 50;
         buttoni.background = "teal";
         buttoni.alpha = 0.2;
 
-        var mouseOver = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mouseOverUI")
         let rect1 = new BABYLON.GUI.Rectangle();
-        rect1.width = 0.3;
+        rect1.width = "250px";
         rect1.height = "80px";
         rect1.background = "Beige";
         mouseOver.addControl(rect1);
@@ -208,22 +231,22 @@
 
       //Right face
       for (let i = 0; i < 9; i++) {
-        let planei = BABYLON.MeshBuilder.CreatePlane("plane", { height: 73, width: 3.3 });
+        let planei = plane.clone("Plane")
+        planei.scaling = new BABYLON.Vector3(1, 1, 1);
         planei.position.x = 55.2 - i * 1.65
         planei.position.y = -4
         planei.position.z = 10.7 - i * 2.7
         planei.rotation.y = -1
 
-        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei, 512, 512, true);
+        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei, 1, 1, true);
         let buttoni = BABYLON.GUI.Button.CreateSimpleButton("but1");
         buttoni.color = "white";
         buttoni.fontSize = 50;
         buttoni.background = "teal";
         buttoni.alpha = 0.2;
 
-        var mouseOver = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mouseOverUI")
         let rect1 = new BABYLON.GUI.Rectangle();
-        rect1.width = 0.3;
+        rect1.width = "250px";
         rect1.height = "80px";
         rect1.background = "Beige";
         mouseOver.addControl(rect1);
@@ -253,24 +276,24 @@
       //Left side Upper
 
       for (let i = 0; i < 8; i++) {
-        let planei = BABYLON.MeshBuilder.CreatePlane("plane", { height: 54-i*7.3, width: 3 });
-        planei.position.x = -20.2+i*1.27
-        planei.position.y = -11+i*5.8
-        planei.position.z = -10.5+i*2.9
+        let planei = plane.clone("Plane")
+        planei.scaling = new BABYLON.Vector3(1, 0.75-i*0.1, 0.9);
+        planei.position.x = -20.5+i*1.27
+        planei.position.y = -12+i*5.8
+        planei.position.z = -11+i*3.0
         planei.rotation.x = 0.265
         planei.rotation.y = 1.45
         planei.rotation.z = -0.03
 
-        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei, 512, 512, true);
+        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei, 1, 1, true);
         let buttoni = BABYLON.GUI.Button.CreateSimpleButton("but1");
         buttoni.color = "white";
         buttoni.fontSize = 50;
         buttoni.background = "teal";
         buttoni.alpha = 0.2;
 
-        var mouseOver = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mouseOverUI")
         let rect1 = new BABYLON.GUI.Rectangle();
-        rect1.width = 0.3;
+        rect1.width = "250px";
         rect1.height = "80px";
         rect1.background = "Beige";
         mouseOver.addControl(rect1);
@@ -300,22 +323,22 @@
       //Left side Lower
 
       for (let i = 0; i < 9; i++) {
-        let planei = BABYLON.MeshBuilder.CreatePlane("plane", { height: 70-i*8, width: 3 });
+        let planei = plane.clone("Plane")
+        planei.scaling = new BABYLON.Vector3(1, 0.95-i*0.11, 0.9);
         planei.position.x = -11.5-i*1.8
         planei.position.y = -5-i*4
         planei.position.z = 11-i*2.5
         planei.rotation.y = -0.94
 
-        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei, 512, 512, true);
+        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei, 1, 1, true);
         let buttoni = BABYLON.GUI.Button.CreateSimpleButton("but1");
         buttoni.color = "white";
         buttoni.fontSize = 50;
         buttoni.background = "teal";
         buttoni.alpha = 0.2;
 
-        var mouseOver = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mouseOverUI")
         let rect1 = new BABYLON.GUI.Rectangle();
-        rect1.width = 0.3;
+        rect1.width = "250px";
         rect1.height = "80px";
         rect1.background = "Beige";
         mouseOver.addControl(rect1);
@@ -341,18 +364,21 @@
         });
         advancedTexture.addControl(buttoni);
       }
+
     });
+
 
     return scene;
 
   };
 
-
+      let divFps = document.getElementById("fps");
   const scene = createScene(); //Call the createScene function
 
   // Register a render loop to repeatedly render the scene
   engine.runRenderLoop(function () {
     scene.render();
+    divFps.innerHTML = engine.getFps().toFixed() + " fps";
   });
 
   // Watch for browser/canvas resize events
@@ -360,6 +386,7 @@
     engine.resize();
   });
   </script>
+
 
 </body>
 
