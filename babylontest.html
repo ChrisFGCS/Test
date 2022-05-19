@@ -78,10 +78,11 @@
 
 
     //Model import
-    var buildingMesh = BABYLON.SceneLoader.Append("https://raw.githubusercontent.com/ChrisFGCS/Test/main/Blender/", "240 Blackfriar's exploded.glb", scene, function (newMeshes) {
+    var buildingMesh = BABYLON.SceneLoader.Append("https://raw.githubusercontent.com/ChrisFGCS/Test/main/Blender/", "240 Blackfriar's Exploded.glb", scene, function (newMeshes) {
       var helper = scene.createDefaultEnvironment({
         createSkybox: false,
         enableGroundMirror: true,
+        groundYBias: 0.01,
       });
 
 
