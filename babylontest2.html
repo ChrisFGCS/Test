@@ -58,7 +58,7 @@
     // This creates a basic Babylon Scene object (non-mesh)
     var scene = new BABYLON.Scene(engine);
     //Orbit Camera
-    var camera = new BABYLON.ArcRotateCamera("camera", BABYLON.Tools.ToRadians(250), BABYLON.Tools.ToRadians(85), 150, BABYLON.Vector3.Zero(), scene);
+    var camera = new BABYLON.ArcRotateCamera("camera", BABYLON.Tools.ToRadians(240), BABYLON.Tools.ToRadians(65), 300, BABYLON.Vector3.Zero(), scene);
     // This targets the camera to scene origin
     camera.setTarget(BABYLON.Vector3.Zero());
     // This attaches the camera to the canvas
@@ -89,7 +89,7 @@
 
       //GUI
 
-      let plane = BABYLON.MeshBuilder.CreatePlane("plane", { height: 73, width: 3.5 });
+      let plane = BABYLON.MeshBuilder.CreatePlane("plane", { height: 100, width: 5 });
       plane.scaling = new BABYLON.Vector3(0.1, 0.1, 0.1)
 
       var mouseOver = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mouseOverUI")
@@ -97,10 +97,10 @@
       //Populate with buttons planes
       for (let i = 0; i < 15; i++) {
         let planei = plane.clone("Plane")
-        planei.scaling = new BABYLON.Vector3(1, 1 - i * 0.017, 1);
-        planei.position.x = 39.5 - i * 3.5
-        planei.position.y = -4 - i * 0.65
-        planei.position.z = -12.1
+        planei.scaling = new BABYLON.Vector3(1, 1, 1);
+        planei.position.x = 0
+        planei.position.y = 0
+        planei.position.z = 0
 
         //Apply button properties to planes
         var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei, 1, 1, true);
@@ -143,229 +143,6 @@
         });
         advancedTexture.addControl(buttoni);
       }
-
-      //Steeper slope
-      for (let i = 0; i < 5; i++) {
-        let planei = plane.clone("Plane")
-        planei.scaling = new BABYLON.Vector3(1, 0.75 - i * 0.165, 1);
-        planei.position.x = -12.5 - i * 3.5
-        planei.position.y = -14 - i * 5.9
-        planei.position.z = -12.1
-
-        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei, 1, 1, true);
-        let buttoni = BABYLON.GUI.Button.CreateSimpleButton("but1");
-        buttoni.color = "white";
-        buttoni.fontSize = 50;
-        buttoni.background = "teal";
-        buttoni.alpha = 0.2;
-
-        let rect1 = new BABYLON.GUI.Rectangle();
-        rect1.width = "250px";
-        rect1.height = "80px";
-        rect1.background = "Beige";
-        mouseOver.addControl(rect1);
-
-        let label = new BABYLON.GUI.TextBlock();
-        label.text = "Started: (Date) (Time)\nCompleted: (Date) (Time)\nIssues: ";
-        label.fontSize = "20%";
-        label.lineSpacing = 3;
-        label.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-
-        rect1.addControl(label);
-
-        rect1.linkWithMesh(planei);
-        rect1.linkOffsetX = 140;
-        rect1.alpha = 0;
-        buttoni.onPointerEnterObservable.add(function() {
-          buttoni.alpha = 1;
-          rect1.alpha = 1;
-        });
-        buttoni.onPointerOutObservable.add(function() {
-          buttoni.alpha = 0.2;
-          rect1.alpha = 0;
-        });
-        advancedTexture.addControl(buttoni);
-      }
-
-      //Rear face
-      for (let i = 0; i < 19; i++) {
-        let planei = plane.clone("Plane")
-        planei.scaling = new BABYLON.Vector3(1, 1, 1);
-        planei.position.x = 54 - i * 3.5
-        planei.position.y = -4
-        planei.position.z = 12.1
-
-        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei, 1, 1, true);
-        let buttoni = BABYLON.GUI.Button.CreateSimpleButton("but1");
-        buttoni.color = "white";
-        buttoni.fontSize = 50;
-        buttoni.background = "teal";
-        buttoni.alpha = 0.2;
-
-        let rect1 = new BABYLON.GUI.Rectangle();
-        rect1.width = "250px";
-        rect1.height = "80px";
-        rect1.background = "Beige";
-        mouseOver.addControl(rect1);
-
-        let label = new BABYLON.GUI.TextBlock();
-        label.text = "Started: (Date) (Time)\nCompleted: (Date) (Time)\nIssues: ";
-        label.fontSize = "20%";
-        label.lineSpacing = 3;
-        label.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-
-        rect1.addControl(label);
-
-        rect1.linkWithMesh(planei);
-        rect1.linkOffsetX = 140;
-        rect1.alpha = 0;
-        buttoni.onPointerEnterObservable.add(function() {
-          buttoni.alpha = 1;
-          rect1.alpha = 1;
-        });
-        buttoni.onPointerOutObservable.add(function() {
-          buttoni.alpha = 0.2;
-          rect1.alpha = 0;
-        });
-        advancedTexture.addControl(buttoni);
-      }
-
-      //Right face
-      for (let i = 0; i < 9; i++) {
-        let planei = plane.clone("Plane")
-        planei.scaling = new BABYLON.Vector3(1, 1, 1);
-        planei.position.x = 55.2 - i * 1.65
-        planei.position.y = -4
-        planei.position.z = 10.7 - i * 2.7
-        planei.rotation.y = -1
-
-        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei, 1, 1, true);
-        let buttoni = BABYLON.GUI.Button.CreateSimpleButton("but1");
-        buttoni.color = "white";
-        buttoni.fontSize = 50;
-        buttoni.background = "teal";
-        buttoni.alpha = 0.2;
-
-        let rect1 = new BABYLON.GUI.Rectangle();
-        rect1.width = "250px";
-        rect1.height = "80px";
-        rect1.background = "Beige";
-        mouseOver.addControl(rect1);
-
-        let label = new BABYLON.GUI.TextBlock();
-        label.text = "Started: (Date) (Time)\nCompleted: (Date) (Time)\nIssues: ";
-        label.fontSize = "20%";
-        label.lineSpacing = 3;
-        label.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-
-        rect1.addControl(label);
-
-        rect1.linkWithMesh(planei);
-        rect1.linkOffsetX = 140;
-        rect1.alpha = 0;
-        buttoni.onPointerEnterObservable.add(function() {
-          buttoni.alpha = 1;
-          rect1.alpha = 1;
-        });
-        buttoni.onPointerOutObservable.add(function() {
-          buttoni.alpha = 0.2;
-          rect1.alpha = 0;
-        });
-        advancedTexture.addControl(buttoni);
-      }
-
-      //Left side Upper
-
-      for (let i = 0; i < 8; i++) {
-        let planei = plane.clone("Plane")
-        planei.scaling = new BABYLON.Vector3(1, 0.75-i*0.1, 0.9);
-        planei.position.x = -20.5+i*1.27
-        planei.position.y = -12+i*5.8
-        planei.position.z = -11+i*3.0
-        planei.rotation.x = 0.265
-        planei.rotation.y = 1.45
-        planei.rotation.z = -0.03
-
-        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei, 1, 1, true);
-        let buttoni = BABYLON.GUI.Button.CreateSimpleButton("but1");
-        buttoni.color = "white";
-        buttoni.fontSize = 50;
-        buttoni.background = "teal";
-        buttoni.alpha = 0.2;
-
-        let rect1 = new BABYLON.GUI.Rectangle();
-        rect1.width = "250px";
-        rect1.height = "80px";
-        rect1.background = "Beige";
-        mouseOver.addControl(rect1);
-
-        let label = new BABYLON.GUI.TextBlock();
-        label.text = "Started: (Date) (Time)\nCompleted: (Date) (Time)\nIssues: ";
-        label.fontSize = "20%";
-        label.lineSpacing = 3;
-        label.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-
-        rect1.addControl(label);
-
-        rect1.linkWithMesh(planei);
-        rect1.linkOffsetX = 140;
-        rect1.alpha = 0;
-        buttoni.onPointerEnterObservable.add(function() {
-          buttoni.alpha = 1;
-          rect1.alpha = 1;
-        });
-        buttoni.onPointerOutObservable.add(function() {
-          buttoni.alpha = 0.2;
-          rect1.alpha = 0;
-        });
-        advancedTexture.addControl(buttoni);
-      }
-
-      //Left side Lower
-
-      for (let i = 0; i < 9; i++) {
-        let planei = plane.clone("Plane")
-        planei.scaling = new BABYLON.Vector3(1, 0.95-i*0.11, 0.9);
-        planei.position.x = -11.5-i*1.8
-        planei.position.y = -5-i*4
-        planei.position.z = 11-i*2.5
-        planei.rotation.y = -0.94
-
-        var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(planei, 1, 1, true);
-        let buttoni = BABYLON.GUI.Button.CreateSimpleButton("but1");
-        buttoni.color = "white";
-        buttoni.fontSize = 50;
-        buttoni.background = "teal";
-        buttoni.alpha = 0.2;
-
-        let rect1 = new BABYLON.GUI.Rectangle();
-        rect1.width = "250px";
-        rect1.height = "80px";
-        rect1.background = "Beige";
-        mouseOver.addControl(rect1);
-
-        let label = new BABYLON.GUI.TextBlock();
-        label.text = "Started: (Date) (Time)\nCompleted: (Date) (Time)\nIssues: ";
-        label.fontSize = "20%";
-        label.lineSpacing = 3;
-        label.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-
-        rect1.addControl(label);
-
-        rect1.linkWithMesh(planei);
-        rect1.linkOffsetX = 140;
-        rect1.alpha = 0;
-        buttoni.onPointerEnterObservable.add(function() {
-          buttoni.alpha = 1;
-          rect1.alpha = 1;
-        });
-        buttoni.onPointerOutObservable.add(function() {
-          buttoni.alpha = 0.2;
-          rect1.alpha = 0;
-        });
-        advancedTexture.addControl(buttoni);
-      }
-
     });
 
 
