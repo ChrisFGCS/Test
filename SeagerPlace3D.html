@@ -78,20 +78,43 @@
 
 
     //Model import
-    var buildingMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/ChrisFGCS/Test/main/Blender/", "Seager Place (Tex).glb", scene, function (newMeshes) {
+    var buildingMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/ChrisFGCS/Test/main/Blender/", "Seager Place A 5.glb", scene, function (newMeshes) {
       var helper = scene.createDefaultEnvironment({
         createSkybox: false,
         enableGroundMirror: true,
         groundYBias: 0.01,
       });
+      let shadow = scene.getMeshByName(`Block A 4`)
+      shadow.isPickable = false;
     });
 
     //GUI
+    var ui = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mouseOverUI")
+
+    //Popup button
+    let rect1 = new BABYLON.GUI.Rectangle();
+    rect1.width = "300px";
+    rect1.height = "60px";
+    rect1.background = "Beige";
+    rect1.isPointerBlocker = true;
+    ui.addControl(rect1);
+
+    //Populate containter rectangle with text
+    let label = new BABYLON.GUI.TextBlock();
+
+    label.fontSize = "30%";
+    label.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+
+    rect1.addControl(label);
+
+    //Offset rectangle to prevent cursor overlap and hide
+    rect1.alpha = 0;
+
     var currentMesh;
     var oldColour;
 
     scene.constantlyUpdateMeshUnderPointer = true;
-    scene.onPointerObservable.add((pointerInfo) => {  
+    scene.onPointerObservable.add((pointerInfo) => {
       switch (pointerInfo.type) {
         case BABYLON.PointerEventTypes.POINTERMOVE:
         if(pointerInfo.pickInfo.hit) {
@@ -103,11 +126,16 @@
             console.log(currentMesh.name);
             oldColour = currentMesh.material.emissiveColor;
             currentMesh.material.emissiveColor = new BABYLON.Color3(0.0,0.0,1);
+            rect1.alpha = 1;
+            label.text = currentMesh.name;
+            rect1.linkWithMesh(currentMesh)
+
           }
         } else if (currentMesh) {
           currentMesh.material.emissiveColor = oldColour;
           currentMesh = null;
           oldColour = null;
+          rect1.alpha = 0;
         }
         break;
       }

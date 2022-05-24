@@ -1,0 +1,166 @@
+
+
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Babylon Template</title>
+
+  <style>
+
+  #fps {
+                  position: absolute;
+                  background-color: black;
+                  border: 2px solid red;
+                  text-align: center;
+                  font-size: 16px;
+                  color: white;
+                  top: 15px;
+                  right: 10px;
+                  width: 60px;
+                  height: 20px;
+              }
+
+  html, body {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  #renderCanvas {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    touch-action: none;
+  }
+  </style>
+
+  <script src="https://cdn.babylonjs.com/babylon.js"></script>
+  <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+  <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+  <script src="https://cdn.babylonjs.com/gui/babylon.gui.js"></script>
+</head>
+
+<body>
+
+  <div id="fps">0</div>
+
+  <canvas id="renderCanvas" touch-action="none"></canvas> <!-- touch-action="none" for best results from PEP -->
+
+  <script>
+  const canvas = document.getElementById("renderCanvas"); // Get the canvas element
+  const engine = new BABYLON.Engine(canvas, true, {doNotHandleContextLost: true}); // Generate the BABYLON 3D engine
+  engine.enableOfflineSupport = false;
+
+  var createScene = function () {
+    // This creates a basic Babylon Scene object (non-mesh)
+    var scene = new BABYLON.Scene(engine);
+    //Orbit Camera
+    var camera = new BABYLON.ArcRotateCamera("camera", BABYLON.Tools.ToRadians(80), BABYLON.Tools.ToRadians(75), 150, BABYLON.Vector3.Zero(), scene);
+    // This targets the camera to scene origin
+    camera.setTarget(BABYLON.Vector3.Zero());
+    // This attaches the camera to the canvas
+    camera.attachControl(canvas, true);
+
+    scene.clearColor = new BABYLON.Color3(0.2, 0.2, 0.2);
+
+    //This initialises 3 Hemispheric Lights in the 3 axes to create the illusion of 360 degree light
+    var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(-1, 0, 0), scene);
+    light.intensity = 3;
+    var light2 = new BABYLON.HemisphericLight("light2", new BABYLON.Vector3(0, 1, 0), scene);
+    light2.intensity = 3;
+    var light3 = new BABYLON.HemisphericLight("light3", new BABYLON.Vector3(0, 0.5, -1), scene);
+    light3.intensity = 3;
+
+    // Skybox
+
+
+    //Model import
+    var buildingMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/ChrisFGCS/Test/main/Blender/", "Seager Place A 5.glb", scene, function (newMeshes) {
+      var helper = scene.createDefaultEnvironment({
+        createSkybox: false,
+        enableGroundMirror: true,
+        groundYBias: 0.01,
+      });
+    });
+
+    //GUI
+    var ui = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mouseOverUI")
+
+    //Popup button
+    let rect1 = new BABYLON.GUI.Rectangle();
+    rect1.width = "150px";
+    rect1.height = "60px";
+    rect1.background = "Beige";
+    rect1.isPointerBlocker = true
+    ui.addControl(rect1);
+
+    //Populate containter rectangle with text
+    let label = new BABYLON.GUI.TextBlock();
+
+    label.fontSize = "30%";
+    label.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+
+    rect1.addControl(label);
+
+    //Offset rectangle to prevent cursor overlap and hide
+    rect1.alpha = 0;
+
+    var currentMesh;
+    var oldColour;
+
+    scene.constantlyUpdateMeshUnderPointer = true;
+    scene.onPointerObservable.add((pointerInfo) => {
+      switch (pointerInfo.type) {
+        case BABYLON.PointerEventTypes.POINTERMOVE:
+        if(pointerInfo.pickInfo.hit) {
+          if (pointerInfo.pickInfo.pickedMesh != currentMesh) {
+            if (currentMesh != null) {
+              currentMesh.material.emissiveColor = oldColour;
+            }
+            currentMesh = pointerInfo.pickInfo.pickedMesh;
+            console.log(currentMesh.name);
+            oldColour = currentMesh.material.emissiveColor;
+            currentMesh.material.emissiveColor = new BABYLON.Color3(0.0,0.0,1);
+            rect1.alpha = 1;
+            label.text = currentMesh.name;
+
+          }
+        } else if (currentMesh) {
+          currentMesh.material.emissiveColor = oldColour;
+          currentMesh = null;
+          oldColour = null;
+          rect1.alpha = 0;
+        }
+        break;
+      }
+    });
+
+
+
+    return scene;
+
+  };
+
+      let divFps = document.getElementById("fps");
+  const scene = createScene(); //Call the createScene function
+
+  // Register a render loop to repeatedly render the scene
+  engine.runRenderLoop(function () {
+    scene.render();
+    divFps.innerHTML = engine.getFps().toFixed() + " fps";
+  });
+
+  // Watch for browser/canvas resize events
+  window.addEventListener("resize", function () {
+    engine.resize();
+  });
+  </script>
+
+
+</body>
+
+
+</html>
