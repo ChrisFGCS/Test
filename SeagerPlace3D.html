@@ -86,6 +86,35 @@
       });
     });
 
+    //GUI
+    var currentMesh;
+    var oldColour;
+
+    scene.constantlyUpdateMeshUnderPointer = true;
+    scene.onPointerObservable.add((pointerInfo) => {  
+      switch (pointerInfo.type) {
+        case BABYLON.PointerEventTypes.POINTERMOVE:
+        if(pointerInfo.pickInfo.hit) {
+          if (pointerInfo.pickInfo.pickedMesh != currentMesh) {
+            if (currentMesh != null) {
+              currentMesh.material.emissiveColor = oldColour;
+            }
+            currentMesh = pointerInfo.pickInfo.pickedMesh;
+            console.log(currentMesh.name);
+            oldColour = currentMesh.material.emissiveColor;
+            currentMesh.material.emissiveColor = new BABYLON.Color3(0.0,0.0,1);
+          }
+        } else if (currentMesh) {
+          currentMesh.material.emissiveColor = oldColour;
+          currentMesh = null;
+          oldColour = null;
+        }
+        break;
+      }
+    });
+
+
+
     return scene;
 
   };
