@@ -84,8 +84,10 @@
         enableGroundMirror: true,
         groundYBias: 0.01,
       });
-      let shadow = scene.getMeshByName(`Block A 4`)
+      let shadow = scene.getMeshByName(`not-runs`)
       shadow.isPickable = false;
+      let ground = scene.getMeshByName(`BackgroundPlane`)
+      ground.isPickable = false;
     });
 
     //GUI
@@ -96,7 +98,6 @@
     rect1.width = "300px";
     rect1.height = "60px";
     rect1.background = "Beige";
-    rect1.isPointerBlocker = true;
     ui.addControl(rect1);
 
     //Populate containter rectangle with text
