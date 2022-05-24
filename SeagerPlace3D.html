@@ -58,7 +58,7 @@
     // This creates a basic Babylon Scene object (non-mesh)
     var scene = new BABYLON.Scene(engine);
     //Orbit Camera
-    var camera = new BABYLON.ArcRotateCamera("camera", BABYLON.Tools.ToRadians(80), BABYLON.Tools.ToRadians(75), 150, BABYLON.Vector3.Zero(), scene);
+    var camera = new BABYLON.ArcRotateCamera("camera", BABYLON.Tools.ToRadians(50), BABYLON.Tools.ToRadians(65), 60, BABYLON.Vector3.Zero(), scene);
     // This targets the camera to scene origin
     camera.setTarget(BABYLON.Vector3.Zero());
     // This attaches the camera to the canvas
@@ -94,6 +94,10 @@
       shadow3.isPickable = false;
       let shadow4 = scene.getMeshByName(`not-runs_primitive4`)
       shadow4.isPickable = false;
+      let shadow5 = scene.getMeshByName(`not-runs_primitive5`)
+      shadow5.isPickable = false;
+      let shadow6 = scene.getMeshByName(`not-runs_primitive6`)
+      shadow6.isPickable = false;
       let ground = scene.getMeshByName(`BackgroundPlane`)
       ground.isPickable = false;
     });
@@ -102,8 +106,8 @@
     var ui = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mouseOverUI")
 
     //Popup button
-    let rect1 = new BABYLON.GUI.Rectangle();
-    rect1.width = "300px";
+    var rect1 = new BABYLON.GUI.Rectangle();
+    rect1.width = "150px";
     rect1.height = "60px";
     rect1.background = "Beige";
     ui.addControl(rect1);
@@ -134,10 +138,9 @@
             currentMesh = pointerInfo.pickInfo.pickedMesh;
             console.log(currentMesh.name);
             oldColour = currentMesh.material.emissiveColor;
-            currentMesh.material.emissiveColor = new BABYLON.Color3(0.0,0.0,1);
+            currentMesh.material.emissiveColor = new BABYLON.Color3(0.0,0.0,0.5);
             rect1.alpha = 1;
-            label.text = currentMesh.name;
-            rect1.linkWithMesh(currentMesh)
+            label.text = "Run number: \n" + currentMesh.name;
 
           }
         } else if (currentMesh) {
@@ -150,7 +153,12 @@
       }
     });
 
-
+    engine.runRenderLoop(() => {
+    var width = engine.getRenderWidth();
+    var height = engine.getRenderHeight();
+    rect1.leftInPixels = scene.pointerX - (width / 2.6);
+    rect1.topInPixels = scene.pointerY - (height / 2.1);
+    });
 
     return scene;
 
