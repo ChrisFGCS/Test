@@ -156,8 +156,8 @@
     engine.runRenderLoop(() => {
     var width = engine.getRenderWidth();
     var height = engine.getRenderHeight();
-    rect1.leftInPixels = scene.pointerX - (width / 2.6);
-    rect1.topInPixels = scene.pointerY - (height / 2.1);
+    rect1.leftInPixels = scene.pointerX - (width / 2) + 75;
+    rect1.topInPixels = scene.pointerY - (height / 2) + 30;
     });
 
     return scene;
