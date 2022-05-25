@@ -84,10 +84,10 @@
         enableGroundMirror: true,
         groundYBias: 0.01,
       });
-      let shadow0 = scene.getMeshByName(`not-runs`)
-      let balconies = scene.getMeshByName(`Baclonies`)
-      sbalconies.isPickable = false;
+      var ground = scene.getMeshByName('BackgroundPlane');
+      ground.isPickable = false;
     });
+
 
     //GUI
     var ui = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("mouseOverUI")
@@ -124,9 +124,10 @@
             }
             currentMesh = pointerInfo.pickInfo.pickedMesh;
             oldColour = currentMesh.material.emissiveColor;
-            currentMesh.material.emissiveColor = new BABYLON.Color3(0.0,0.0,0.5);
-            rect1.alpha = 1;
-            label.text = "Run number: \n" + currentMesh.name;
+            if (currentMesh != scene.getMeshByName(`not-runs`))
+              currentMesh.material.emissiveColor = new BABYLON.Color3(0.0,0.0,0.5);
+              rect1.alpha = 1;
+              label.text = "Run number: \n" + currentMesh.name;
           }
         } else if (currentMesh) {
           currentMesh.material.emissiveColor = oldColour;
@@ -141,7 +142,7 @@
     engine.runRenderLoop(() => {
     var width = engine.getRenderWidth();
     var height = engine.getRenderHeight();
-    rect1.leftInPixels = scene.pointerX - (width / 2) + 75;
+    rect1.leftInPixels = scene.pointerX - (width / 2) + 90;
     rect1.topInPixels = scene.pointerY - (height / 2) + 30;
     });
 
