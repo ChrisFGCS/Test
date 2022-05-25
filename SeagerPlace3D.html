@@ -78,28 +78,15 @@
 
 
     //Model import
-    var buildingMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/ChrisFGCS/Test/main/Blender/", "Seager Place A 5.glb", scene, function (newMeshes) {
+    var buildingMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/ChrisFGCS/Test/main/Blender/", "Seager Place A5.glb", scene, function (newMeshes) {
       var helper = scene.createDefaultEnvironment({
         createSkybox: false,
         enableGroundMirror: true,
         groundYBias: 0.01,
       });
-      let shadow0 = scene.getMeshByName(`not-runs_primitive0`)
-      shadow0.isPickable = false;
-      let shadow1 = scene.getMeshByName(`not-runs_primitive1`)
-      shadow1.isPickable = false;
-      let shadow2 = scene.getMeshByName(`not-runs_primitive2`)
-      shadow2.isPickable = false;
-      let shadow3 = scene.getMeshByName(`not-runs_primitive3`)
-      shadow3.isPickable = false;
-      let shadow4 = scene.getMeshByName(`not-runs_primitive4`)
-      shadow4.isPickable = false;
-      let shadow5 = scene.getMeshByName(`not-runs_primitive5`)
-      shadow5.isPickable = false;
-      let shadow6 = scene.getMeshByName(`not-runs_primitive6`)
-      shadow6.isPickable = false;
-      let ground = scene.getMeshByName(`BackgroundPlane`)
-      ground.isPickable = false;
+      let shadow0 = scene.getMeshByName(`not-runs`)
+      let balconies = scene.getMeshByName(`Baclonies`)
+      sbalconies.isPickable = false;
     });
 
     //GUI
@@ -140,7 +127,6 @@
             currentMesh.material.emissiveColor = new BABYLON.Color3(0.0,0.0,0.5);
             rect1.alpha = 1;
             label.text = "Run number: \n" + currentMesh.name;
-
           }
         } else if (currentMesh) {
           currentMesh.material.emissiveColor = oldColour;
