@@ -86,6 +86,8 @@
       });
       var ground = scene.getMeshByName('BackgroundPlane');
       ground.isPickable = false;
+      var balconies = scene.getMeshByName('Balconies');
+      balconies.isPickable = false;
     });
 
 
@@ -107,11 +109,10 @@
 
     rect1.addControl(label);
 
-    //Offset rectangle to prevent cursor overlap and hide
     rect1.alpha = 0;
 
     var currentMesh;
-    var oldColour;
+    var oldColour
 
     scene.constantlyUpdateMeshUnderPointer = true;
     scene.onPointerObservable.add((pointerInfo) => {
@@ -124,10 +125,14 @@
             }
             currentMesh = pointerInfo.pickInfo.pickedMesh;
             oldColour = currentMesh.material.emissiveColor;
-            if (currentMesh != scene.getMeshByName(`not-runs`))
+            if (currentMesh != scene.getMeshByName(`not-runs`)) {
               currentMesh.material.emissiveColor = new BABYLON.Color3(0.0,0.0,0.5);
               rect1.alpha = 1;
-              label.text = "Run number: \n" + currentMesh.name;
+              label.text = "Run ID: \n" + currentMesh.name;
+            }
+            else {
+              rect1.alpha = 0;
+            }
           }
         } else if (currentMesh) {
           currentMesh.material.emissiveColor = oldColour;
