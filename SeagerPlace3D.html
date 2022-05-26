@@ -78,7 +78,7 @@
 
 
     //Model import
-    var buildingMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/ChrisFGCS/Test/main/Blender/", "Seager Place (Tex)).glb", scene, function (newMeshes) {
+    var buildingMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/ChrisFGCS/Test/main/Blender/", "Seager Place (Tex).glb", scene, function (newMeshes) {
       var helper = scene.createDefaultEnvironment({
         createSkybox: false,
         enableGroundMirror: true,
@@ -126,7 +126,7 @@
             currentMesh = pointerInfo.pickInfo.pickedMesh;
             oldColour = currentMesh.material.emissiveColor;
             if (currentMesh != scene.getMeshByName(`Blocks`)) {
-              currentMesh.material.emissiveColor = new BABYLON.Color3(0.0,0.0,0.5);
+              currentMesh.material.emissiveColor = new BABYLON.Color3(0,0.5,0);
               rect1.alpha = 1;
               label.text = "Run ID: \n" + currentMesh.name;
             }
