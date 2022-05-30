@@ -58,7 +58,7 @@
     // This creates a basic Babylon Scene object (non-mesh)
     var scene = new BABYLON.Scene(engine);
     //Orbit Camera
-    var camera = new BABYLON.ArcRotateCamera("camera", BABYLON.Tools.ToRadians(50), BABYLON.Tools.ToRadians(65), 60, BABYLON.Vector3.Zero(), scene);
+    var camera = new BABYLON.ArcRotateCamera("camera", BABYLON.Tools.ToRadians(50), BABYLON.Tools.ToRadians(65), 240, BABYLON.Vector3.Zero(), scene);
     // This targets the camera to scene origin
     camera.setTarget(BABYLON.Vector3.Zero());
     // This attaches the camera to the canvas
@@ -80,7 +80,7 @@
 
 
     //Model import
-    var buildingMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/ChrisFGCS/Test/main/Blender/", "240 Blackfriar's (Marked).glb", scene, function (newMeshes) {
+    var buildingMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/ChrisFGCS/Test/main/Blender/", "Seager Place (Marked).glb", scene, function (newMeshes) {
       var helper = scene.createDefaultEnvironment({
         createSkybox: false,
         enableGroundMirror: true,
@@ -88,6 +88,10 @@
       });
       var ground = scene.getMeshByName('BackgroundPlane');
       ground.isPickable = false;
+      var balconies = scene.getMeshByName('Balconies');
+      if (balconies){
+        balconies.isPickable = false;
+      }
     });
 
 
