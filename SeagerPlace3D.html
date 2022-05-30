@@ -78,11 +78,9 @@
     var light3 = new BABYLON.HemisphericLight("light3", new BABYLON.Vector3(0, 0.5, -1), scene);
     light3.intensity = 3;
 
-    // Skybox
-
 
     //Model import
-    var buildingMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/ChrisFGCS/Test/main/Blender/", "Seager Place (Tex).glb", scene, function (newMeshes) {
+    var buildingMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/ChrisFGCS/Test/main/Blender/", "240 Blackfriar's (Marked).glb", scene, function (newMeshes) {
       var helper = scene.createDefaultEnvironment({
         createSkybox: false,
         enableGroundMirror: true,
@@ -90,8 +88,6 @@
       });
       var ground = scene.getMeshByName('BackgroundPlane');
       ground.isPickable = false;
-      var balconies = scene.getMeshByName('Balconies');
-      balconies.isPickable = false;
     });
 
 
