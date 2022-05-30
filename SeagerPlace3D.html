@@ -63,6 +63,10 @@
     camera.setTarget(BABYLON.Vector3.Zero());
     // This attaches the camera to the canvas
     camera.attachControl(canvas, true);
+    camera.upperBetaLimit = 1.8
+    camera.lowerBetaLimit = 0.8
+
+    
 
     scene.clearColor = new BABYLON.Color3(0.2, 0.2, 0.2);
 
