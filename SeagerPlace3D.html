@@ -65,9 +65,6 @@
     camera.upperBetaLimit = 1.8
     camera.lowerBetaLimit = 0.8
 
-    
-
-    scene.clearColor = new BABYLON.Color3(0.2, 0.2, 0.2);
 
     //This initialises 3 Hemispheric Lights in the 3 axes to create the illusion of 360 degree light
     var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(-1, 0, 0), scene);
@@ -85,20 +82,10 @@
         createGround: false,
       });
 
-      const groundMesh = BABYLON.MeshBuilder.CreateCylinder("ground", {height: 5, diameter: 125, tessellation: 50}, scene);
-      groundMesh.isPickable = false;
-      groundMesh.position.y = -16.5;
-      groundMesh.position.z = -10;
-      groundMesh.position.x = -10;
-      
-      // My attempt to color the sphere
-var groundMaterial = new BABYLON.StandardMaterial(scene);
-groundMaterial.alpha = 1;
-groundMaterial.diffuseColor = new BABYLON.Color3(1.0, 0.2, 0.7);
-groundMesh.material = groundMaterial;
+      var ground = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/ChrisFGCS/Test/main/Blender/", "GroundMesh.glb", scene, function (newMeshes){
+      });
 
-      var ground = scene.getMeshByName('BackgroundPlane');
-      ground.isPickable = false;
+
       var balconies = scene.getMeshByName('Balconies');
       if (balconies){
         balconies.isPickable = false;
