@@ -82,9 +82,12 @@
         createGround: false,
       });
 
-      var ground = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/ChrisFGCS/Test/main/Blender/", "GroundMesh.glb", scene, function (newMeshes){
+      var groundMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/ChrisFGCS/Test/main/Blender/", "GroundMesh.glb", scene, function (newMeshes){
       });
 
+      var ground = scene.getMeshByName('ground');
+      ground.isPickable = false;
+      ground.material.diffuseColor = new BABYLON.Color3(0,0.5,0);
 
       var balconies = scene.getMeshByName('Balconies');
       if (balconies){
