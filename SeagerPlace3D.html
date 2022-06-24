@@ -33,7 +33,6 @@
     width: 100%;
     height: 100%;
     margin: auto;
-    touch-action: none;
   }
   </style>
 
@@ -83,9 +82,21 @@
     var buildingMesh = BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/ChrisFGCS/Test/main/Blender/", "Seager Place (Marked).glb", scene, function (newMeshes) {
       var helper = scene.createDefaultEnvironment({
         createSkybox: false,
-        enableGroundMirror: true,
-        groundYBias: 0.01,
+        createGround: false,
       });
+
+      const groundMesh = BABYLON.MeshBuilder.CreateCylinder("ground", {height: 5, diameter: 125, tessellation: 50}, scene);
+      groundMesh.isPickable = false;
+      groundMesh.position.y = -16.5;
+      groundMesh.position.z = -10;
+      groundMesh.position.x = -10;
+      
+      // My attempt to color the sphere
+var groundMaterial = new BABYLON.StandardMaterial(scene);
+groundMaterial.alpha = 1;
+groundMaterial.diffuseColor = new BABYLON.Color3(1.0, 0.2, 0.7);
+groundMesh.material = groundMaterial;
+
       var ground = scene.getMeshByName('BackgroundPlane');
       ground.isPickable = false;
       var balconies = scene.getMeshByName('Balconies');
